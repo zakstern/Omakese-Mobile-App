@@ -7,13 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+extern NSString *const SCSessionStateChangedNotification;
 
-@class ViewController;
+@class SetupViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) ViewController *viewController;
+@property (strong, nonatomic) SetupViewController *viewController;
+@property (strong, nonatomic) UINavigationController *navController;
 
 @end

@@ -7,19 +7,38 @@
 //
 
 #import "AppDelegate.h"
-
 #import "ViewController.h"
+#import "IntegratedViewController.h"
+#import "SetupViewController.h"
+#import <Parse/Parse.h>
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [Parse setApplicationId:@"pxc8wnAOLVlUVrInrUPpTDJLNx3gw0Ytdxmvx12m"
+                  clientKey:@"aVHFuWHtPOMWJub1rmcpgCV214LBzd1Ci94qADtO"];
+    [PFFacebookUtils initializeFacebook];
+    [PFTwitterUtils initializeWithConsumerKey:@"u6N1MvGU6ba500SBXz4g"
+                               consumerSecret:@"FDqrOYcDYQGXJ9T8WDDApLLO9SvtFIV1SmkpsMxQ"];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
-    self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+    self.viewController = [[SetupViewController alloc] initWithNibName:@"SetupViewController" bundle:nil];
+    self.viewController.title = @"Omakase";
+    self.navController = [[UINavigationController alloc] initWithRootViewController:self.viewController];
+    self.window.rootViewController = _navController;
     [self.window makeKeyAndVisible];
     return YES;
+}
+
+- (BOOL)application:(UIApplication *)application handleOpenURL:(NSURL *)url {
+    return [PFFacebookUtils handleOpenURL:url];
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return [PFFacebookUtils handleOpenURL:url];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
